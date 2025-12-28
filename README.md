@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Riku Mart - Fullstack Marketplace Engineering
 
-## Getting Started
+Proyek ini terdiri dari dua bagian utama: **Backend (Golang)** dan **Frontend (Next.js)**.
 
-First, run the development server:
+---
 
+## 🖥️ BACKEND (Golang Version)
+*Pusat kendali backend berperforma tinggi.*
+
+### Teknologi Utama
+- **Framework:** Gin Gonic
+- **ORM:** GORM (PostgreSQL)
+- **Security:** Bcrypt & JWT
+
+### API Endpoints
+| Method | Endpoint | Fungsi | Akses |
+| :--- | :--- | :--- | :--- |
+| GET | `/status` | Cek status kesehatan API | Public |
+| POST | `/api/register` | Pendaftaran user baru | Public |
+| POST | `/api/login` | Login & dapatkan Token JWT | Public |
+
+---
+
+## 🎨 FRONTEND (Next.js Version)
+*Antarmuka pengguna yang modern dan responsif.*
+
+### Sistem Otentikasi & Guard (Penting!)
+Kami menggunakan sistem **Client-Side Guard** untuk memproteksi halaman berdasarkan Role user:
+
+1. **Proteksi Seller (`/seller`)**: Hanya user dengan role `SELLER` yang diizinkan.
+2. **Proteksi Admin (`/admin`)**: Hanya user dengan role `SUPERADMIN` yang diizinkan.
+
+### Alur Kerja Session
+- Data **token** dan **user** disimpan di `localStorage`.
+- Menggunakan `setTimeout` (50-100ms) saat login untuk sinkronisasi data sebelum pindah halaman.
+- `middleware.ts` dinonaktifkan sementara untuk menghindari konflik navigasi.
+
+---
+
+## 🛠️ Cara Menjalankan Project
+
+### 1. Backend
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+cd marketplace-backend
+go mod tidy
+go run main.go
