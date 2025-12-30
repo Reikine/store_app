@@ -3,6 +3,7 @@ package main
 import (
 	"marketplace-backend/config"
 	"marketplace-backend/controllers"
+	"marketplace-backend/middlewares"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -24,6 +25,12 @@ func main() {
 	r.GET("/status", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "Backend Golang & Database Aktif"})
 	})
+	protected := r.Group("/api")
+	protected.Use(middlewares.AuthMiddleware())
+	{
+		protected.POST("/products", controllers.CreateProduct)
+	}
+	r.GET("/api/products", controllers.GetProducts)
 
 	r.POST("/api/register", controllers.Register)
 	r.POST("/api/login", controllers.Login)

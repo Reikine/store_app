@@ -22,7 +22,7 @@ func ConnectDatabase() {
 	if err != nil {
 		panic("Gagal tersambung ke Database")
 	}
-	database.AutoMigrate(&models.User{})
+	database.AutoMigrate(&models.User{}, &models.Product{})
 	DB = database
 	log.Println("Database berhasil tersambung dan terkoneksi")
 }

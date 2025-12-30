@@ -5,10 +5,25 @@ import (
 	"marketplace-backend/config"
 	"marketplace-backend/models"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var secretKey = []byte("watashiwawibuomaewanani")
+
+func GenerateToken(userID string, role string) (string, error) {
+	claims := jwt.MapClaims{
+		"user_id": userID,
+		"role":    role,
+		"exp":     time.Now().Add(time.Hour * 24).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(secretKey)
+}
 
 func Register(c *gin.Context) {
 	var input struct {
@@ -61,10 +76,22 @@ func Login(c *gin.Context) {
 		c.JSON(401, gin.H{"error": "Email atau password salah"})
 		return
 	}
+
+	token, err := GenerateToken(user.ID, user.Role)
+	if err != nil {
+		fmt.Println("Debug JWT", err)
+		c.JSON(500, gin.H{"error": "Gagal buat token"})
+		return
+	}
 	c.JSON(200, gin.H{
 		"message": "Login Berhasil",
-		"user":    user,
-		"token":   "dummy-token",
+		"user": gin.H{
+			"id":    user.ID,
+			"name":  user.Name,
+			"email": user.Email,
+			"role":  user.Role,
+		},
+		"token": token,
 	})
 	fmt.Printf("DEBUG: Login attempt for Email: %s with Pass: %s\n", input.Email, input.Password)
 }

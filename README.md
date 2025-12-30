@@ -44,3 +44,20 @@ Kami menggunakan sistem **Client-Side Guard** untuk memproteksi halaman berdasar
 cd marketplace-backend
 go mod tidy
 go run main.go
+
+## 🚀 Update Log - [31 Desember 2025]
+
+### Backend (Golang & Gin)
+- **Middleware Auth**: Implementasi JWT Middleware untuk memproteksi endpoint sensitif.
+- **Product Management**: 
+  - Membuat model `Product` dengan relasi ke `User`.
+  - Membuat endpoint `POST /api/products` untuk tambah barang (Protected).
+  - Membuat endpoint `GET /api/products` dengan `Preload("User")` untuk mengambil semua produk beserta data penjualnya.
+- **Database**: Sinkronisasi tabel otomatis menggunakan GORM AutoMigrate.
+
+### Frontend (Next.js & Tailwind)
+- **Seller Dashboard**: 
+  - Implementasi *fetching* data produk secara dinamis menggunakan Axios.
+  - Fitur filter produk agar seller hanya melihat barang miliknya sendiri.
+  - Integrasi state management untuk *loading* dan *data display*.
+- **Navigation**: Menghubungkan dashboard ke halaman tambah produk.
