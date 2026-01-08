@@ -1,0 +1,7 @@
+FROM golang:1.24-bookworm
+WORKDIR /app
+COPY ./backend .
+RUN ls -la vendor/ 
+RUN go build -mod=vendor -o main .
+EXPOSE 8080
+CMD [ "./main" ]
