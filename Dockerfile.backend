@@ -1,7 +1,18 @@
-FROM golang:1.24-bookworm
+FROM golang:1.25-bookworm
+
 WORKDIR /app
-COPY ./backend .
-RUN ls -la vendor/ 
-RUN go build -mod=vendor -o main .
+
+
+ENV GOPROXY=https://proxy.golang.org,direct
+
+
+RUN go install github.com/air-verse/air@latest
+
+
+COPY ./backend/go.mod ./backend/go.sum* ./
+RUN go mod download
+
 EXPOSE 8080
-CMD [ "./main" ]
+
+# Jalankan Air secara langsung
+CMD ["air"]

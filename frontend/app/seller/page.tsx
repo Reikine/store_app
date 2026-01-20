@@ -33,7 +33,6 @@ export default function SellerPage() {
 
     return (
         <div className="flex min-h-screen bg-gray-50 text-black">
-            {/* Sidebar tetap sama ... */}
             <div className="w-64 bg-white border-r border-gray-200 p-6 flex flex-col space-y-8">
                 <h2 className="text-2xl font-bold text-blue-600">Seller Store's</h2>
                 <nav className="flex flex-col space-y-2">
@@ -55,8 +54,6 @@ export default function SellerPage() {
                         <h1 className="text-3xl font-bold">{sellerName}</h1>
                         <p className="text-gray-500">Pantau perkembangan tokomu hari ini.</p>
                     </div>
-
-                    {/* 4. Bungkus tombol dengan Link ke halaman yang kita buat tadi */}
                     <Link href="/seller/add-product">
                         <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center shadow-lg hover:bg-blue-700 transition">
                             <Plus className="mr-2" size={20} /> Tambah Produk
@@ -69,10 +66,8 @@ export default function SellerPage() {
                         <p className="text-gray-400 text-sm font-medium">Total Produk</p>
                         <h3 className="text-2xl font-bold mt-1">{products.length}</h3>
                     </div>
-                    {/* ... Card lainnya ... */}
                 </div>
 
-                {/* 5. Logic Tampilan Produk */}
                 <div className="mt-10">
                     {loading ? (
                         <p className="text-center text-gray-400">Memuat produk...</p>
